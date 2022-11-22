@@ -28,6 +28,7 @@ public:
     std::set<int> DepthFirstSearch(int vertex);
     std::vector<int> DFSForestPostorder(std::vector<int> toVisit);
     std::vector<std::set<int>> DFSForestSCCs(std::vector<int> postorder);
+    bool CheckDependency(int i);
 
     void To_String();
 };
