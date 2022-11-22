@@ -87,7 +87,31 @@ void Interpreter::EvaluateRules() {
         }
         tostring.pop_back();
         std::cout << tostring << std::endl;
-        if (forest.at(i).size() != 1) {
+        if (forest.at(i).size() == 1) {
+            bool dependent = false;
+            for (int j : forest.at(i)) {
+                if (dependency.CheckDependency(j)) {
+                    dependent = true;
+                }
+            }
+            if (dependent) {
+                do {
+                    addedTuple = false;
+                    for (int j : forest.at(i)) {
+                        EvaluateRule(rules.at(j));
+                    }
+                    passes++;
+                } while(addedTuple);
+            }
+            else {
+                addedTuple = false;
+                for (int j : forest.at(i)) {
+                    EvaluateRule(rules.at(j));
+                }
+                passes++;
+            }
+        }
+        else {
             do {
                 addedTuple = false;
                 for (int j : forest.at(i)) {
@@ -96,14 +120,6 @@ void Interpreter::EvaluateRules() {
                 passes++;
             } while(addedTuple);
         }
-        else {
-            addedTuple = false;
-            for (int j : forest.at(i)) {
-                EvaluateRule(rules.at(j));
-            }
-            passes++;
-        }
-
         std::cout << passes << " passes: " << tostring;
     }
     std::cout << std::endl;
