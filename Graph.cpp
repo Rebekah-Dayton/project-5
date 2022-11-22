@@ -111,3 +111,16 @@ int Graph::FindNode(int i) {
     return -1;
 }
 
+bool Graph::CheckDependency(int i) {
+    for (auto it = graph.begin(); it != graph.end(); it++) {
+        if (it->first == i) {
+            for (int j: it->second) {
+                if (it->first == j) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
